@@ -1,231 +1,156 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8" />
-<title>飲料選擇網站 2.0</title>
+<meta charset="UTF-8">
+<title>今天喝什麼</title>
 
-<!-- 字體 & 美工 -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        font-family: 'Noto Sans TC', sans-serif;
-        background: linear-gradient(135deg, #fff1d6, #ffd8b5);
-        margin: 0;
-        padding: 0;
-    }
+/* ===== 背景（高級柔和流體漸層） ===== */
+body {
+    margin: 0;
+    font-family: "Noto Sans TC", sans-serif;
+    background: radial-gradient(circle at 20% 20%, #ffe3c9, #ffb88a 50%, #ff9a76 80%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
 
-    header {
-        background: linear-gradient(90deg, #ff9e41, #ff7b00);
-        color: #fff;
-        padding: 25px;
-        text-align: center;
-        font-size: 32px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
-    }
+/* ===== 頁首 ===== */
+header {
+    text-align: center;
+    color: white;
+    padding: 40px 0 20px;
+    font-size: 42px;
+    font-weight: 700;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
 
-    .container {
-        width: 90%;
-        margin: 30px auto;
-    }
+/* ===== 外層容器 ===== */
+.container {
+    width: 90%;
+    margin: auto;
+}
 
-    .controls {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 25px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+/* ===== 控制區（玻璃擬態） ===== */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    margin-bottom: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
 
-    select, button {
-        padding: 12px 18px;
-        font-size: 16px;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-    }
+select, button {
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+}
 
-    select {
-        background: #fff;
-        border: 2px solid #ffa54c;
-    }
+select {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid #ffc48b;
+}
 
-    button {
-        background: #ff7b00;
-        color: white;
-        font-weight: 600;
-        transition: 0.2s;
-    }
-    button:hover {
-        background: #d96800;
-    }
+button {
+    background: linear-gradient(135deg, #ff8a3d, #ff5e00);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.25s;
+}
 
-    /* 卡片區 */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 25px;
-    }
+button:hover {
+    transform: scale(1.08);
+}
 
-    .card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        padding: 18px;
-        cursor: pointer;
-        transition: 0.25s;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-    }
-    .card img {
-        width: 100%;
-        border-radius: 10px;
-        margin-bottom: 10px;
-    }
+/* ===== 飲料網格 ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+}
 
-    .store {
-        color: #ff7b00;
-        font-weight: 700;
-    }
+/* ===== 卡片：玻璃擬態 + 漸層陰影 ===== */
+.card {
+    background: rgba(255,255,255,0.28);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 18px;
+    transition: 0.25s;
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
 
-    /* 彈窗背景 */
-    .modal-bg {
-        display: none;
-        position: fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: rgba(0,0,0,0.55);
-        justify-content: center;
-        align-items: center;
-    }
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.20);
+}
 
-    /* 彈窗本體 */
-    .modal {
-        background: white;
-        padding: 25px;
-        width: 320px;
-        border-radius: 15px;
-        text-align: center;
-        animation: pop 0.3s ease-out;
-    }
+.card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 15px;
+}
 
-    @keyframes pop {
-        0% { transform: scale(0.6); opacity: 0;}
-        100% { transform: scale(1); opacity: 1;}
-    }
+.card h3 {
+    margin: 12px 0 4px;
+}
 
-    .close-btn {
-        margin-top: 18px;
-        background: #aaa;
-    }
+.store {
+    font-weight: 700;
+    color: #ff5e00;
+}
+
+/* ===== 彈窗背景 ===== */
+.modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== 彈窗 ===== */
+.modal {
+    width: 350px;
+    background: rgba(255,255,255,0.96);
+    padding: 28px;
+    border-radius: 20px;
+    text-align: center;
+    animation: pop 0.28s ease-out;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+@keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+    background: #989898;
+    margin-top: 15px;
+}
 </style>
 </head>
 
 <body>
 
-<header>🍹 飲料選擇器 2.0</header>
+<header>🍹 飲料選擇器 4.0</header>
 
 <div class="container">
 
-    <!-- 選單 -->
     <div class="controls">
         <select id="filterStore">
             <option value="all">所有店家</option>
             <option value="五十嵐">五十嵐</option>
-            <option value="清心福全">清心福全</option>
-            <option value="迷客夏">迷客夏</option>
-        </select>
-
-        <button id="randomBtn">隨機選一杯 🍀</button>
-    </div>
-
-    <!-- 飲料卡片 -->
-    <div id="drinkList" class="grid"></div>
-</div>
-
-<!-- 彈窗 -->
-<div class="modal-bg" id="modalBg">
-    <div class="modal">
-        <h2 id="modalName"></h2>
-        <p class="store" id="modalStore"></p>
-        <p id="modalDesc"></p>
-        <button class="close-btn" onclick="closeModal()">關閉</button>
-    </div>
-</div>
-
-<script>
-// ------------------------
-// 飲料資料（含店名）
-// ------------------------
-const drinks = [
-    // 五十嵐
-    { name: "珍珠奶茶", store: "五十嵐", price: 60, desc: "招牌人氣 No.1，香濃奶茶搭配 Q 彈珍珠。", img:"https://source.unsplash.com/400x400/?bubbletea" },
-    { name: "四季春青茶", store: "五十嵐", price: 35, desc: "茶香清爽、回甘順口的經典茶飲。", img:"https://source.unsplash.com/400x400/?greentea" },
-
-    // 清心
-    { name: "百香雙Q", store: "清心福全", price: 55, desc: "百香果搭配珍珠與椰果，酸甜又有嚼勁。", img:"https://source.unsplash.com/400x400/?passionfruit" },
-    { name: "鮮奶紅茶", store: "清心福全", price: 50, desc: "茶香與奶香交融的舒適口感。", img:"https://source.unsplash.com/400x400/?milktea" },
-
-    // 迷客夏
-    { name: "大甲芋頭鮮奶", store: "迷客夏", price: 75, desc: "濃郁芋頭加上鮮奶，綿密又香甜。", img:"https://source.unsplash.com/400x400/?taro" },
-    { name: "青檸香茶", store: "迷客夏", price: 45, desc: "新鮮檸檬與茶香的完美融合。", img:"https://source.unsplash.com/400x400/?lemontea" }
-];
-
-// 元素
-const drinkList = document.getElementById('drinkList');
-const filterStore = document.getElementById('filterStore');
-const randomBtn  = document.getElementById('randomBtn');
-
-// ------------------------
-// 渲染飲料
-// ------------------------
-function renderDrinks() {
-    const store = filterStore.value;
-    drinkList.innerHTML = "";
-
-    drinks
-    .filter(d => store === "all" || d.store === store)
-    .forEach(d => {
-        drinkList.innerHTML += `
-        <div class="card" onclick="showDetail('${d.name}')">
-            <img src="${d.img}">
-            <h3>${d.name}</h3>
-            <p class="store">${d.store}</p>
-            <p>💲${d.price}</p>
-        </div>`;
-    });
-}
-
-// ------------------------
-// 彈窗
-// ------------------------
-function showDetail(name) {
-    const d = drinks.find(i => i.name === name);
-    document.getElementById("modalName").innerText = d.name;
-    document.getElementById("modalStore").innerText = d.store;
-    document.getElementById("modalDesc").innerText = d.desc;
-    document.getElementById("modalBg").style.display = "flex";
-}
-function closeModal(){
-    document.getElementById("modalBg").style.display = "none";
-}
-
-// 隨機推薦
-randomBtn.addEventListener("click", () => {
-    const d = drinks[Math.floor(Math.random() * drinks.length)];
-    showDetail(d.name);
-});
-
-// 篩選
-filterStore.addEventListener("change", renderDrinks);
-
-// 初始化
-renderDrinks();
-</script>
-
-</body>
-</html>
