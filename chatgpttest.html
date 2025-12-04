@@ -85,4 +85,135 @@ button:hover {
 .modal-bg {
     position: fixed;
     inset: 0;
-    ba
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: white;
+    padding: 25px;
+    width: 320px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.close-btn {
+    background: gray;
+    color: #fff;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🍹 飲料選擇器 4.1（穩定版）</header>
+
+<div class="container">
+
+    <div class="controls">
+        <select id="filterStore">
+            <option value="all">所有店家</option>
+            <option value="五十嵐">五十嵐</option>
+            <option value="清心福全">清心福全</option>
+            <option value="迷客夏">迷客夏</option>
+            <option value="CoCo">CoCo</option>
+        </select>
+
+        <button id="randomBtn">✨ 隨機推薦</button>
+    </div>
+
+    <div id="drinkList" class="grid"></div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBg">
+    <div class="modal">
+        <h2 id="modalName"></h2>
+        <p class="store" id="modalStore"></p>
+        <p id="modalDesc"></p>
+        <button class="close-btn" onclick="closeModal()">關閉</button>
+    </div>
+</div>
+
+<script>
+/* 固定可載入的 placeholder 圖片 */
+const imgURL = "https://placehold.co/400x300/png";
+
+/* 24 種飲料資料 */
+const drinks = [
+    {name:"珍珠奶茶", store:"五十嵐", desc:"經典不敗。", img:imgURL},
+    {name:"四季春青茶", store:"五十嵐", desc:"清香耐喝。", img:imgURL},
+    {name:"冰淇淋紅茶", store:"五十嵐", desc:"沁涼香甜。", img:imgURL},
+    {name:"可可芋圓奶", store:"五十嵐", desc:"甜而不膩。", img:imgURL},
+    {name:"百香綠", store:"五十嵐", desc:"酸甜順口。", img:imgURL},
+
+    {name:"百香雙Q", store:"清心福全", desc:"料多又好喝。", img:imgURL},
+    {name:"鮮奶青茶", store:"清心福全", desc:"清爽奶香。", img:imgURL},
+    {name:"冬瓜檸檬", store:"清心福全", desc:"夏天首選。", img:imgURL},
+    {name:"甘蔗青茶", store:"清心福全", desc:"自然清甜。", img:imgURL},
+    {name:"仙草凍奶茶", store:"清心福全", desc:"滑嫩仙草。", img:imgURL},
+
+    {name:"芋頭鮮奶", store:"迷客夏", desc:"濃郁香芋。", img:imgURL},
+    {name:"紅茶拿鐵", store:"迷客夏", desc:"經典比例。", img:imgURL},
+    {name:"青檸香茶", store:"迷客夏", desc:"清香酸甜。", img:imgURL},
+    {name:"黑糖珍奶", store:"迷客夏", desc:"黑糖香濃。", img:imgURL},
+    {name:"金萱茶", store:"迷客夏", desc:"清雅回甘。", img:imgURL},
+
+    {name:"芒果綠茶", store:"CoCo", desc:"果香濃郁。", img:imgURL},
+    {name:"奶茶三兄弟", store:"CoCo", desc:"料多滿足。", img:imgURL},
+    {name:"紅柚綠茶", store:"CoCo", desc:"清爽微酸。", img:imgURL},
+    {name:"鮮芋牛奶", store:"CoCo", desc:"芋泥控必喝。", img:imgURL},
+    {name:"莓果多多", store:"CoCo", desc:"維C爆棚。", img:imgURL},
+
+    {name:"水果茶", store:"迷客夏", desc:"滿滿水果。", img:imgURL},
+    {name:"芝士奶蓋綠茶", store:"CoCo", desc:"鹹甜好喝。", img:imgURL},
+    {name:"黑糖粉粿鮮奶", store:"五十嵐", desc:"粉粿Q彈。", img:imgURL},
+    {name:"蜜香紅茶", store:"清心福全", desc:"茶香順口。", img:imgURL}
+];
+
+const drinkList = document.getElementById("drinkList");
+const filterStore = document.getElementById("filterStore");
+const modalBg = document.getElementById("modalBg");
+
+function renderDrinks() {
+    drinkList.innerHTML = "";
+    drinks
+        .filter(d => filterStore.value === "all" || d.store === filterStore.value)
+        .forEach(d => {
+            drinkList.innerHTML += `
+                <div class="card" onclick="showDetail('${d.name}')">
+                    <img src="${d.img}">
+                    <h3>${d.name}</h3>
+                    <p class="store">${d.store}</p>
+                </div>
+            `;
+        });
+}
+
+function showDetail(name){
+    const d = drinks.find(x => x.name === name);
+    document.getElementById("modalName").innerText = d.name;
+    document.getElementById("modalStore").innerText = d.store;
+    document.getElementById("modalDesc").innerText = d.desc;
+    modalBg.style.display = "flex";
+}
+
+function closeModal(){
+    modalBg.style.display = "none";
+}
+
+document.getElementById("randomBtn").onclick = () => {
+    const d = drinks[Math.floor(Math.random() * drinks.length)];
+    showDetail(d.name);
+};
+
+filterStore.onchange = renderDrinks;
+renderDrinks();
+</script>
+
+</body>
+</html>
