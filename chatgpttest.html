@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>飲料選擇器</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #ffb83b;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #ff9c07;
+            border: none;
+            padding: 12px 20px;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #e28500;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        /* 彈窗 */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .close-btn {
+            margin-top: 15px;
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<header>🍹 飲料選擇器</header>
+
+<div class="container">
+
+    <div class="controls">
+        <select id="filterType">
+            <option value="all">全部飲料</option>
+            <option value="奶茶">奶茶</option>
+            <option value="水果茶">水果茶</option>
+            <option value="茶類">茶類</option>
+        </select>
+        <button id="randomBtn">隨機推薦一杯</button>
+    </div>
+
+    <div id="drinkList" class="grid"></div>
+
+</div>
+
+<!-- 彈窗 -->
+<div class="modal-bg" id="modalBg">
+    <div class="modal">
+        <h2 id="modalName"></h2>
+        <p id="modalDesc"></p>
+        <button class="close-btn" onclick="closeModal()">關閉</button>
+    </div>
+</div>
+
+<script>
+const drinks = [
+    { name: "珍珠奶茶", price: 55, type: "奶茶", desc: "Q彈珍珠搭配濃郁奶香。", img: "https://via.placeholder.com/250" },
+    { name: "紅茶拿鐵", price: 60, type: "奶茶", desc: "茶香與鮮奶的完美比例。", img: "https://via.placeholder.com/250" },
+    { name: "百香果綠", price: 45, type: "水果茶", desc: "酸甜清爽的百香果風味。", img: "https://via.placeholder.com/250" },
+    { name: "檸檬青茶", price: 50, type: "水果茶", desc: "清香青茶搭配新鮮檸檬汁。", img: "https://via.placeholder.com/250" },
+    { name: "綠茶", price: 30, type: "茶類", desc: "無糖最順口，低卡健康。", img: "https://via.placeholder.com/250" }
+];
+
+const drinkList = document.getElementById('drinkList');
+const filterType = document.getElementById('filterType');
+const randomBtn = document.getElementById('randomBtn');
+
+function renderDrinks() {
+    const type = filterType.value;
+    drinkList.innerHTML = "";
+
+    drinks
+        .filter(d => type === "all" || d.type === type)
+        .forEach(drink => {
+            drinkList.innerHTML += `
+                <div class="card" onclick="showDetail('${drink.name}')">
+                    <img src="${drink.img}">
+                    <h3>${drink.name}</h3>
+                    <p>💲${drink.price}</p>
+                    <p>${drink.type}</p>
+                </div>
+            `;
+        });
+}
+
+function showDetail(name) {
+    const d = drinks.find(drink => drink.name === name);
+    document.getElementById("modalName").innerText = d.name;
+    document.getElementById("modalDesc").innerText = d.desc;
+    document.getElementById("modalBg").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modalBg").style.display = "none";
+}
+
+randomBtn.addEventListener("click", () => {
+    const d = drinks[Math.floor(Math.random() * drinks.length)];
+    showDetail(d.name);
+});
+
+filterType.addEventListener("change", renderDrinks);
+
+renderDrinks();
+</script>
+
+</body>
+</html>
