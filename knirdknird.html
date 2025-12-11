@@ -109,8 +109,33 @@ h1 {
     cursor: pointer;
     font-size: 18px;
 }
-</style>
 
+/* --- 轉盤動畫 --- */
+#wheelBox {
+    margin: 40px auto;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 8px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#wheelSpin {
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        #f8f6f3 0deg 90deg,
+        #e7ded5 90deg 180deg,
+        #f8f6f3 180deg 270deg,
+        #e7ded5 270deg 360deg
+    );
+    border-radius: 50%;
+    transition: transform 3s cubic-bezier(.25, .1, .25, 1);
+}
+
+</style>
 </head>
 
 <body>
@@ -124,6 +149,7 @@ h1 {
         <button onclick="showSection('milk')">濃醇鮮奶</button>
         <button onclick="showSection('nocafe')">無咖啡因</button>
         <button onclick="showSection('fruit')">水果系</button>
+        <button onclick="startWheel()">隨機</button>
     </div>
 </div>
 
@@ -145,7 +171,6 @@ h1 {
     <div class="item"><div class="name">四季春青茶</div><div class="price">M 35 / L 45</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
 
     <div class="item"><div class="name">經典五桐茶</div><div class="price">M 40 / L 50</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
-
 </div>
 
 <!-- ================== 濃醇鮮奶 ================== -->
@@ -172,7 +197,6 @@ h1 {
     <div class="item"><div class="name">蕎麥鮮奶茶</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
 
     <div class="item"><div class="name">島韻鮮奶茶</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
-
 </div>
 
 <!-- ================== 無咖啡因 ================== -->
@@ -189,7 +213,6 @@ h1 {
     <div class="item"><div class="name">焙香決明大麥</div><div class="price">M 55 / L 65</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
 
     <div class="item"><div class="name">原鄉冬瓜茶</div><div class="price">M 45 / L 55</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
-
 </div>
 
 <!-- ================== 水果系 ================== -->
@@ -224,7 +247,24 @@ h1 {
     <div class="item"><div class="name">蜂蜜檸檬</div><div class="price">M 80 / L 90</div><div class="options">糖度：固定<br>冰量：正常冰／少冰／微冰／去冰</div></div>
 
     <div class="item"><div class="name">柚香翡翠</div><div class="price">M 85 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+</div>
 
+<!-- ================== 轉盤頁面 ================== -->
+<div id="wheel" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>隨機轉盤</h2>
+
+    <div id="wheelBox">
+        <div id="wheelSpin"></div>
+    </div>
+</div>
+
+<!-- ================== 隨機結果頁 ================== -->
+<div id="random" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>今日隨機推薦</h2>
+
+    <div id="randomResult" class="item"></div>
 </div>
 
 <script>
@@ -232,6 +272,78 @@ function showSection(id) {
     document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
     document.getElementById(id).classList.add("active");
     window.scrollTo(0, 0);
+}
+
+function startWheel() {
+    showSection("wheel");
+
+    const wheel = document.getElementById("wheelSpin");
+
+    // 5–10圈 + 隨機角度
+    const rotateAmount =
+        360 * (5 + Math.floor(Math.random() * 5)) +
+        Math.floor(Math.random() * 360);
+
+    wheel.style.transform = `rotate(${rotateAmount}deg)`;
+
+    setTimeout(() => {
+        randomDrink();
+    }, 3000);
+}
+
+function randomDrink() {
+
+    const drinks = [
+        {name:"娜杯紅茶", price:"M 35 / L 45"},
+        {name:"老賴紅茶", price:"M 35 / L 45"},
+        {name:"高山金萱", price:"M 40 / L 50"},
+        {name:"錫蘭紅茶", price:"M 35 / L 45"},
+        {name:"翡翠綠茶", price:"M 40 / L 50"},
+        {name:"四季春青茶", price:"M 35 / L 45"},
+        {name:"經典五桐茶", price:"M 40 / L 50"},
+        {name:"濃煮拿鐵", price:"M 80 / L 95"},
+        {name:"鐵觀音拿鐵", price:"M 85 / L 100"},
+        {name:"娜杯紅茶拿鐵", price:"M 80 / L 95"},
+        {name:"紅茶拿鐵", price:"M 80 / L 95"},
+        {name:"重焙烏龍拿鐵", price:"M 85 / L 100"},
+        {name:"阿華田拿鐵", price:"M 85 / L 100"},
+        {name:"玄米蕎麥拿鐵", price:"M 80 / L 95"},
+        {name:"糯香鮮奶茶", price:"M 80 / L 95"},
+        {name:"蕎麥鮮奶茶", price:"M 80 / L 95"},
+        {name:"島韻鮮奶茶", price:"M 80 / L 95"},
+        {name:"油切蕎麥茶", price:"M 50 / L 60"},
+        {name:"桂花蕎麥茶", price:"M 50 / L 60"},
+        {name:"輕纖蕎麥茶", price:"M 50 / L 60"},
+        {name:"焙香決明大麥", price:"M 55 / L 65"},
+        {name:"原鄉冬瓜茶", price:"M 45 / L 55"},
+        {name:"香橙果粒茶", price:"M 95 / L 110"},
+        {name:"柳橙果粒茶", price:"M 95 / L 110"},
+        {name:"柳橙芒果果粒茶", price:"M 95 / L 110"},
+        {name:"葡萄柚果粒茶", price:"M 95 / L 110"},
+        {name:"葡萄柚果粒蜜茶", price:"M 95 / L 110"},
+        {name:"百香雙Q果", price:"M 80 / L 95"},
+        {name:"柚香紅萱", price:"M 90 / L 105"},
+        {name:"橙香紅萱", price:"M 90 / L 105"},
+        {name:"百香綠茶", price:"M 85 / L 95"},
+        {name:"百香多多", price:"M 85 / L 95"},
+        {name:"翡翠柳橙", price:"M 85 / L 95"},
+        {name:"冰萃檸檬", price:"M 80 / L 90"},
+        {name:"蜂蜜檸檬", price:"M 80 / L 90"},
+        {name:"柚香翡翠", price:"M 85 / L 95"}
+    ];
+
+    const pick = drinks[Math.floor(Math.random() * drinks.length)];
+
+    const sugar = "糖度：正常／少糖／半糖／微糖／無糖";
+    const ice = "冰量：正常冰／少冰／微冰／去冰／熱飲";
+
+    document.getElementById("randomResult").innerHTML = `
+        <div class="name">${pick.name}</div>
+        <div class="price">${pick.price}</div>
+        <div class="options">${sugar}<br>${ice}</div>
+    `;
+
+    showSection("random");
 }
 </script>
 
