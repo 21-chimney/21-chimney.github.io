@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ドリンクドリンク</title>
+
+<style>
+@font-face {
+    font-family: "DrinkFont";
+    src: url("font.ttf") format("truetype");
+}
+@font-face {
+    font-family: "NotoSerifTCBold";
+    src: url("NotoSerifTC-Bold.otf") format("opentype");
+}
+
+:root {
+    --bg: #f2efea;
+    --card-bg: #f8f6f3;
+    --border: #d7d2cb;
+    --text: #4b3e33;
+    --accent: #b79c82;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    font-family: "NotoSerifTCBold";
+    color: var(--text);
+    text-align: center;
+    line-height: 1.8;
+}
+
+h1 {
+    margin-top: 50px;
+    font-family: "DrinkFont";
+    font-size: 48px;
+    letter-spacing: 4px;
+}
+
+.section {
+    display: none;
+    padding: 20px;
+}
+
+.active {
+    display: block;
+}
+
+.category-btns {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.category-btns button {
+    padding: 14px 26px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.category-btns button:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* 飲品色塊格式 */
+.item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 20px auto;
+    width: 85%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.price {
+    color: var(--accent);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.options {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.back {
+    margin: 20px 0;
+    display: inline-block;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>ドリンクドリンク</h1>
+
+<!-- ================== 首頁 ================== -->
+<div id="home" class="section active">
+    <div class="category-btns">
+        <button onclick="showSection('pure')">純茶類</button>
+        <button onclick="showSection('milk')">濃醇鮮奶</button>
+        <button onclick="showSection('nocafe')">無咖啡因</button>
+        <button onclick="showSection('fruit')">水果系</button>
+    </div>
+</div>
+
+<!-- ================== 純茶類 ================== -->
+<div id="pure" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>純茶類</h2>
+
+    <div class="item"><div class="name">娜杯紅茶</div><div class="price">M 35 / L 45</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">老賴紅茶</div><div class="price">M 35 / L 45</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">高山金萱</div><div class="price">M 40 / L 50</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">錫蘭紅茶</div><div class="price">M 35 / L 45</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">翡翠綠茶</div><div class="price">M 40 / L 50</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">四季春青茶</div><div class="price">M 35 / L 45</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">經典五桐茶</div><div class="price">M 40 / L 50</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+</div>
+
+<!-- ================== 濃醇鮮奶 ================== -->
+<div id="milk" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>濃醇鮮奶</h2>
+
+    <div class="item"><div class="name">濃煮拿鐵</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">鐵觀音拿鐵</div><div class="price">M 85 / L 100</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">娜杯紅茶拿鐵</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">紅茶拿鐵</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">重焙烏龍拿鐵</div><div class="price">M 85 / L 100</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">阿華田拿鐵</div><div class="price">M 85 / L 100</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">玄米蕎麥拿鐵</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">糯香鮮奶茶</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">蕎麥鮮奶茶</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">島韻鮮奶茶</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+</div>
+
+<!-- ================== 無咖啡因 ================== -->
+<div id="nocafe" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>無咖啡因</h2>
+
+    <div class="item"><div class="name">油切蕎麥茶</div><div class="price">M 50 / L 60</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">桂花蕎麥茶</div><div class="price">M 50 / L 60</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">輕纖蕎麥茶</div><div class="price">M 50 / L 60</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">焙香決明大麥</div><div class="price">M 55 / L 65</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+    <div class="item"><div class="name">原鄉冬瓜茶</div><div class="price">M 45 / L 55</div><div class="options">糖度：正常／少糖／半糖／微糖／無糖<br>冰量：正常冰／少冰／微冰／去冰／熱飲</div></div>
+
+</div>
+
+<!-- ================== 水果系 ================== -->
+<div id="fruit" class="section">
+    <div class="back" onclick="showSection('home')">← 回首頁</div>
+    <h2>水果系</h2>
+
+    <div class="item"><div class="name">香橙果粒茶</div><div class="price">M 95 / L 110</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">柳橙果粒茶</div><div class="price">M 95 / L 110</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">柳橙芒果果粒茶</div><div class="price">M 95 / L 110</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">葡萄柚果粒茶</div><div class="price">M 95 / L 110</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">葡萄柚果粒蜜茶</div><div class="price">M 95 / L 110</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">百香雙Q果</div><div class="price">M 80 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">柚香紅萱</div><div class="price">M 90 / L 105</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">橙香紅萱</div><div class="price">M 90 / L 105</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">百香綠茶</div><div class="price">M 85 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">百香多多</div><div class="price">M 85 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">翡翠柳橙</div><div class="price">M 85 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">冰萃檸檬</div><div class="price">M 80 / L 90</div><div class="options">糖度：正常／少糖／半糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">蜂蜜檸檬</div><div class="price">M 80 / L 90</div><div class="options">糖度：固定<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+    <div class="item"><div class="name">柚香翡翠</div><div class="price">M 85 / L 95</div><div class="options">糖度：正常／少糖／半糖／微糖<br>冰量：正常冰／少冰／微冰／去冰</div></div>
+
+</div>
+
+<script>
+function showSection(id) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
